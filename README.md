@@ -27,4 +27,4 @@ Para subir o ambiente, rode o comando:
 $ cd node-nginx-mysql ; docker-compose up -d
 ```
 
-Vá até o endereço [http://localhost:3000](http://localhost:3000) para acessar a aplicação.
+Vá até o endereço [http://localhost:8080](http://localhost:8080) para acessar a aplicação.
