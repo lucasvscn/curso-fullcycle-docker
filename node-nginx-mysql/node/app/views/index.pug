@@ -6,10 +6,49 @@ block content
       div(class='container')
         h1(class='title') Full Cycle Rocks!
 
-  section(class='container mt-5 pl-2 pr-2')
+  section(class='container mt-5 pl-2 pr-2 has-text-light' x-data='people()' x-init="fetchPeople()" x-on:people-updated.window="fetchPeople()")
     h1(class='title has-text-light has-text-centered is-size-1 mb-5') デスノート
-    div(class='field has-addons')
-      div(class='control is-expanded')
-        input(type='text' class='input is-large' placeholder='Somebody\'s name...')
-      div(class='control')
-        button(class='button is-danger is-large') Write it!
+    form(method='POST' @submit.prevent='storePerson()')
+      div(class='field has-addons')
+        div(class='control is-expanded')
+          input(type='text' x-model='formData.name' class='input is-large' placeholder='Somebody\'s name...')
+        div(class='control')
+          button(type='submit' class='button is-danger is-large') Write it!
+
+    div()
+      template(x-if='people')
+        ul
+          template(x-for='person in people')
+            li(x-text='person.name')
+
+  script.
+    function people() {
+      return {
+        formData: {
+          name: ''
+        },
+        people: [],
+        fetchPeople() {
+          fetch('/people')
+            .then(res => res.json())
+            .then(data => {
+              this.people = data.data
+            })
+        },
+        storePerson() {
+          fetch('/people', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(this.formData)
+          })
+          .then(() => {
+            // Fire the event: 'people-updated'
+            window.dispatchEvent(new CustomEvent('people-updated'))
+            this.formData.name = ''
+          })
+          .catch(() => {
+            console.log('Erro!')
+          })
+        }
+      }
+    }

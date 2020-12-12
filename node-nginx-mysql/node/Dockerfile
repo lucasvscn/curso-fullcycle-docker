@@ -2,7 +2,7 @@ FROM node:15
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY app .
 
 RUN apt-get update && apt-get install -y wget
 
@@ -13,5 +13,4 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 EXPOSE 3000
 
-CMD ["bash"]
-# CMD ["node", "index.js"]
+CMD [ "npm", "start" ]
