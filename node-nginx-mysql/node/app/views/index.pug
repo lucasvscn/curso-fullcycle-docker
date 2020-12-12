@@ -7,19 +7,29 @@ block content
         h1(class='title') Full Cycle Rocks!
 
   section(class='container mt-5 pl-2 pr-2 has-text-light' x-data='people()' x-init="fetchPeople()" x-on:people-updated.window="fetchPeople()")
-    h1(class='title has-text-light has-text-centered is-size-1 mb-5') デスノート
+    h1(class='title has-text-light has-text-centered is-size-1 mb-0') デスノート
+    p(class='has-text-grey has-text-centered mb-5')
+      i (Death Note)
     form(method='POST' @submit.prevent='storePerson()')
       div(class='field has-addons')
         div(class='control is-expanded')
-          input(type='text' x-model='formData.name' class='input is-large' placeholder='Somebody\'s name...')
+          input(type='text' x-model='formData.name' class='input is-large' placeholder='Name your next victim ...')
         div(class='control')
-          button(type='submit' class='button is-danger is-large') Write it!
+          button(type='submit' class='button is-danger is-large') Send
 
-    div()
+    div(class='mt-5')
+      h2(class='title has-text-grey has-text-centered is-size-3')
+        i Kira's list
       template(x-if='people')
-        ul
+        ul(class='block-list is-large is-warning is-centered has-radius')
           template(x-for='person in people')
-            li(x-text='person.name')
+            li(x-text='person.name' style="text-decoration: line-through;")
+
+  section(class='container p-2 mb-5')
+    div(class='box')
+      div(class='content')
+        p Esta aplicação é uma versão eletronica do famoso caderno preto do shinigami Ryuk (do anime "Death Note").
+        p Trata-se de uma peça de ficção e de forma nenhuma reflete a realidade.
 
   script.
     function people() {
